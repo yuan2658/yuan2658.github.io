@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,jenkins,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="WhiteWater" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="jenkins部署项目前言在上一篇中已经搭建好jenkins环境，详情可见 jenkins的安装和启动   本篇以上篇为基础，进行一个简单的项目部署，应用一下jenkins与java项目在实际开发中的集成 项目为本人github上的一个测试项目，一个简单的文件上传的demo jenkins配置">
+<meta name="keywords" content="linux,jenkins">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jenkins系列(二 jenkins部署项目)">
+<meta property="og:url" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/index.html">
+<meta property="og:site_name" content="WhiteWater">
+<meta property="og:description" content="jenkins部署项目前言在上一篇中已经搭建好jenkins环境，详情可见 jenkins的安装和启动   本篇以上篇为基础，进行一个简单的项目部署，应用一下jenkins与java项目在实际开发中的集成 项目为本人github上的一个测试项目，一个简单的文件上传的demo jenkins配置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/jenkins.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582029069583.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582029440125.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582029557414.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582029569357.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582029865930.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582030374802.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582030656988.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582030898538.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582031969137.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582032599887.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582033177160.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582033238747.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582033298941.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582034420718.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582034475894.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582034613878.png">
+<meta property="og:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/1582034861492.png">
+<meta property="og:updated_time" content="2022-01-13T12:57:46.424Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jenkins系列(二 jenkins部署项目)">
+<meta name="twitter:description" content="jenkins部署项目前言在上一篇中已经搭建好jenkins环境，详情可见 jenkins的安装和启动   本篇以上篇为基础，进行一个简单的项目部署，应用一下jenkins与java项目在实际开发中的集成 项目为本人github上的一个测试项目，一个简单的文件上传的demo jenkins配置">
+<meta name="twitter:image" content="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/jenkins.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/">
+
+
+
+
+
+  <title>jenkins系列(二 jenkins部署项目) | WhiteWater</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e46442d1930481b98d53762512c55bc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WhiteWater</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Thirst most</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ctrl">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/bbb.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WhiteWater">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">jenkins系列(二 jenkins部署项目)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-18T21:49:13+08:00">
+                2020-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/18/jenkins系列-二/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/18/jenkins系列-二/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/02/18/jenkins系列-二/" class="leancloud_visitors" data-flag-title="jenkins系列(二 jenkins部署项目)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  693
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2020/02/18/jenkins系列-二/jenkins.png" alt></p>
+<h1 id="jenkins部署项目"><a href="#jenkins部署项目" class="headerlink" title="jenkins部署项目"></a>jenkins部署项目</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇中已经搭建好jenkins环境，详情可见 <a href="https://blog.yuanww.cn/2020/02/16/jenkins系列-一/" target="_blank" rel="noopener">jenkins的安装和启动</a>  </p>
+<p>本篇以上篇为基础，进行一个简单的项目部署，应用一下jenkins与java项目在实际开发中的集成</p>
+<p>项目为本人github上的一个测试项目，一个简单的文件上传的demo</p>
+<h2 id="jenkins配置"><a href="#jenkins配置" class="headerlink" title="jenkins配置"></a>jenkins配置</h2><a id="more"></a>
+<p><img src="/2020/02/18/jenkins系列-二/1582029069583.png" alt="1582029069583"></p>
+<p>jenkins安装完成后进入首页，我们需要配置一下全局属性，点击系统管理，选择全局工具配置</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582029440125.png" alt="1582029440125"></p>
+<p>主要是三个属性，jdk、git、maven，选择已经安装好的目录，或者选择自动安装</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582029557414.png" alt="1582029557414"></p>
+<p><img src="/2020/02/18/jenkins系列-二/1582029569357.png" alt="1582029569357"></p>
+<h2 id="安装Maven插件"><a href="#安装Maven插件" class="headerlink" title="安装Maven插件"></a>安装Maven插件</h2><p>找到 “系统管理”-“安装插件”,点击“可选插件”，</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582029865930.png" alt="1582029865930"></p>
+<p>找到如下maven插件的版本 插件名称 <strong>Maven Integration</strong> （构建maven项目）</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582030374802.png" alt="1582030374802"></p>
+<p>勾选，直接安装</p>
+<h2 id="jenkins新建项目"><a href="#jenkins新建项目" class="headerlink" title="jenkins新建项目"></a>jenkins新建项目</h2><p>配置好全局属性和maven插件之后，回到首页，点击新建任务，选择构建一个maven项目</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582030656988.png" alt="1582030656988"></p>
+<p>点击确定，进入项目配置，在源码管理选择git ，填入项目源码的git地址</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582030898538.png" alt="1582030898538"></p>
+<p>build 输入打包前的 mvn 命令   <code>clean install -Dmaven.test.skip=true</code> </p>
+<p>意思是：排除测试的包内容，使用后缀为 test 的配置文件。</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582031969137.png" alt="1582031969137"></p>
+<p>Post Steps，选择Run only if build succeeds </p>
+<p>然后点击Add post-build step，选择执行sell，添加shell命令，用java -jar 直接启动打好的jar包</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582032599887.png" alt="1582032599887"></p>
+<p>shell命令</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">#服务名称</span><br><span class="line">SERVER_NAME=demo</span><br><span class="line"></span><br><span class="line">echo <span class="string">"查询进程id--&gt;$SERVER_NAME"</span></span><br><span class="line"></span><br><span class="line">PID=`ps -ef | grep <span class="string">"$SERVER_NAME"</span> | awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line"></span><br><span class="line">echo <span class="string">"得到进程ID：$PID"</span></span><br><span class="line"></span><br><span class="line">echo <span class="string">"结束进程"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> id in $PID</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">kill -<span class="number">9</span> $id  </span><br><span class="line"></span><br><span class="line">echo <span class="string">"killed $id"</span>  </span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo <span class="string">"结束进程完成"</span></span><br><span class="line"></span><br><span class="line"># jenkens启动任务后会自动kill掉后台进程 设置不要杀死进程</span><br><span class="line">BUILD_ID=dontKillMe</span><br><span class="line"></span><br><span class="line"># 后台启动jar包 并输入日志到指定文件</span><br><span class="line">nohup java -jar /<span class="keyword">var</span>/jenkins_home/workspace/demo/target/demo-<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT.jar &gt;/opt/demo.log <span class="number">2</span>&gt;&amp;<span class="number">1</span> &amp;</span><br></pre></td></tr></table></figure>
+<p>配置完成，点击保存</p>
+<h1 id="jenkins项目启动"><a href="#jenkins项目启动" class="headerlink" title="jenkins项目启动"></a>jenkins项目启动</h1><p>点击任务，进入任务详情</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582033177160.png" alt="1582033177160"></p>
+<p>点击立即构建 构建项目</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582033238747.png" alt="1582033238747"></p>
+<p>点击立即构建后会在下方出现一个进度条，点击进度条，会跳到构建详情页面，可以看到控制台输出日志</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582033298941.png" alt="1582033298941"></p>
+<p>部署项目 的时候先自动安装maven（我这里选的自动安装，若配置maven目录无此步骤），然后会从你的git地址上拉取源代码，maven打包</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582034420718.png" alt="1582034420718"></p>
+<p>maven打包时会根据pom.xml文件下载相关jar包 </p>
+<p>第一次部署项目的时候会比较慢一点 等待即可（可以在maven里配置一下镜像源 会比较快一点）</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582034475894.png" alt="1582034475894"></p>
+<p>项目构建结束 打印出shell命令日志 说明项目构建成功 </p>
+<p><img src="/2020/02/18/jenkins系列-二/1582034613878.png" alt="1582034613878"></p>
+<p>在浏览器输入项目ip和端口号 可以正常访问 项目部署成功！</p>
+<p><img src="/2020/02/18/jenkins系列-二/1582034861492.png" alt="1582034861492"></p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2020/02/18/jenkins系列-二/">jenkins系列(二 jenkins部署项目)</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 ctrl 的个人博客">ctrl</a></p>
+  <p><span>发布时间:</span>2020年02月18日 - 21:02</p>
+  <p><span>最后更新:</span>2022年01月13日 - 20:01</p>
+  <p><span>原始链接:</span><a href="/2020/02/18/jenkins系列-二/" title="jenkins系列(二 jenkins部署项目)">http://blog.whitewater96.top/2020/02/18/jenkins系列-二/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://blog.whitewater96.top/2020/02/18/jenkins系列-二/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+    });
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    <div>
+      
+        <div>
+    
+        <br>
+        <div style="text-align:center;color: #ccc;font-size:30px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+            <a href="/tags/jenkins/" rel="tag"><i class="fa fa-tag"></i> jenkins</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/16/jenkins系列-一/" rel="next" title="jenkins系列（一 jenkins的安装和启动）">
+                <i class="fa fa-chevron-left"></i> jenkins系列（一 jenkins的安装和启动）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/20/docker入门-一/" rel="prev" title="docker入门(一) Dokcer介绍和安装">
+                docker入门(一) Dokcer介绍和安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/bbb.gif" alt="ctrl">
+            
+              <p class="site-author-name" itemprop="name">ctrl</p>
+              <p class="site-description motion-element" itemprop="description">工作时长两年半的CV工程师</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuan2658" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://juejin.im" title="掘金" target="_blank">掘金</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.zhihu.com" title="知乎" target="_blank">知乎</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.spring4all.com" title="Spring For All" target="_blank">Spring For All</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.v2ex.com" title="印记中文" target="_blank">印记中文</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jenkins部署项目"><span class="nav-number">1.</span> <span class="nav-text">jenkins部署项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jenkins配置"><span class="nav-number">1.2.</span> <span class="nav-text">jenkins配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Maven插件"><span class="nav-number">1.3.</span> <span class="nav-text">安装Maven插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jenkins新建项目"><span class="nav-number">1.4.</span> <span class="nav-text">jenkins新建项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jenkins项目启动"><span class="nav-number">2.</span> <span class="nav-text">jenkins项目启动</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ctrl</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点字数总计&#58;</span>
+    
+    <span title="站点字数总计">19.6k</span>
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span class="post-meta-divider">|</span>
+        <span class="post-meta-item-icon"><i class="fa fa-eye"></i></span>
+        总访问量：<span id="busuanzi_value_site_pv"></span>次
+        <span class="post-meta-divider">|</span>
+        <span class="post-meta-item-icon"><i class="fa fa-user"></i></span>
+        总访客：<span id="busuanzi_value_site_uv"></span>人
+  
+  
+
+  
+</div>
+
+
+
+
+ <!--
+
+<div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v</div>
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v="></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'x7eMnnknw8DLXiaQHKGDXYth-gzGzoHsz',
+        appKey: 'Vj1vJImPLhxvGJIpsiDppAGm',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("x7eMnnknw8DLXiaQHKGDXYth-gzGzoHsz", "Vj1vJImPLhxvGJIpsiDppAGm");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"tagMode":false});</script></body>
+</html>
